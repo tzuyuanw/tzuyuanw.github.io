@@ -1,0 +1,13 @@
+---
+layout: default
+title: SEPTA Bus Ridership Research
+---
+	<h1>{{ page.title }}</h1>
+	<div class="blurb">
+   		<p>In workshop, I was responsible for preparing a summary of the existing condition on transportation 
+			as well as creating graphics for proposed interventions relating to transportation in the community.
+		</p>
+		
+
+
+	</div>
