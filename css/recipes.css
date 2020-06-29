@@ -16,9 +16,7 @@ a {
     text-decoration: none;
     color: #999;
 }
-a:link {
-  color: black;
-}
+
 a:hover {
     text-decoration: underline;
 }
