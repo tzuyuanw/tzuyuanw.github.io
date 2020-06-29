@@ -16,9 +16,6 @@ a {
     text-decoration: none;
     color: #999;
 }
-a.homepage{
-    color: darkslategray;
-}
 
 a:hover {
     text-decoration: underline;
