@@ -62,6 +62,7 @@ h3.center{
 
 ul.ingredients {
     list-style-type: circle;
+    color: #333;
 }
 
 footer {
