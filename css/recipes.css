@@ -67,6 +67,7 @@ h3.ingredients{
 ul.ingredients {
     list-style-type: circle;
     color: #333;
+    line-height: 120%;
 }
 
 footer {
