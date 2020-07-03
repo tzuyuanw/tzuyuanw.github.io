@@ -63,6 +63,10 @@ h3.ingredients{
     font-family:'Helvetica', 'Arial', 'Sans-Serif';
 }
 
+.steps{
+    font-family:'Helvetica', 'Arial', 'Sans-Serif';
+}
+
 ul.ingredients {
     list-style-type: circle;
     color: #333;
