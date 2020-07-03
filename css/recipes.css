@@ -35,6 +35,10 @@ p {
 h3.center{
     text-align: center;
 }
+h3.ingredients{
+    line-height: 50%;
+}
+
 * {
   box-sizing: border-box;
 }
