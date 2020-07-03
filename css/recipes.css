@@ -59,20 +59,22 @@ h3.ingredients{
 
 }
 
-.ingredients{
+.ingredients {
     font-family:'Helvetica', 'Arial', 'Sans-Serif';
 }
 
-.steps{
+.steps {
     font-family:'Helvetica', 'Arial', 'Sans-Serif';
 }
-
+ol.steps {
+    color:#333;
+    line-height: 120%;
+}
 ul.ingredients {
     list-style-type: circle;
     color: #333;
     line-height: 120%;
 }
-
 footer {
     border-top: 1px solid #d5d5d5;
     font-size: .8em;
