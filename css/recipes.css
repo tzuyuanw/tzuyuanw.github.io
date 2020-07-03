@@ -66,6 +66,9 @@ h3.ingredients{
 .steps {
     font-family:'Helvetica', 'Arial', 'Sans-Serif';
 }
+.notes {
+    font-family:'Helvetica', 'Arial', 'Sans-Serif';
+}
 ol.steps {
     color:#333;
     line-height: 150%;
