@@ -68,6 +68,7 @@ h3.ingredients{
 }
 .notes {
     font-family:'Helvetica', 'Arial', 'Sans-Serif';
+    font-size: 80%;
 }
 ol.steps {
     color:#333;
