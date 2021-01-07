@@ -13,9 +13,15 @@ title: SEPTA Bus Service Changes Due to Covid-19
 			SEPTA did not operate trips when a bus driver is not available. They allow the trip to be missed, resulting in a higher missed trip rate than usual.
 		</p>
 		<iframe src="GTFS_schedule_graph.html" frameborder="0" width="100%" height="500px"></iframe>
-		<P> 
+		<p> 
 			Interestingly, since SEPTA begin operating Saturday schedule for everyday, a few areas in the suburb of Philadelphia actually experienced
 			a higher frequency bus service during late April and early May. 
 			</p>
 		<iframe src="GTFS_changes_map.html" frameborder="0" width="100%" height="700px"></iframe>
+		<p> Notes on Data Processing and Data Sources:
+		</p>
+		<p> This analysis uses SEPTA's publically available GTFS data covering the period between February 23 to July 13, 2020. 
+			The data was prcessed in R to calculate the number of trips scheduled for each day at both the system and stop level. 
+			The graph and map illustrated were also created using R. 
+		</p>
 	</div>
