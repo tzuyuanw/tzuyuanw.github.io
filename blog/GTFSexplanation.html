@@ -24,10 +24,17 @@ title: Explaining GTFS
 			The file also indicates the information shown on the headsign for each trip.  			
 		</p>
 		<p><b>Stops:</b><br/>
-			The stop file lists all the stops (station) in the system. It provides a unique identifier for each stop (<i>stop_id</i>) as well as its name. 
+			The stop file lists all the stops or station in the system. 
+			It provides a unique identifier for each stop (<i>stop_id</i>) as well as its name. 
 			It also provides the location, specified with longitude and latitude. 
-
 		</p>
+		<p><b>Stop-Times:</b><br/>
+			The Stop_times file marks the arrival and departure time at a stop. 
+			Each entry in the file records a stop made by a trip. 
+			Each entry also includes the unique trip identifier (<i>trip_id</i>), 
+			the unique stop identifier (<i>stop_id</i>) as well as the number indicating the sequence at which the stops are made. 
+		</p>
+		
 
 
 	</div>
