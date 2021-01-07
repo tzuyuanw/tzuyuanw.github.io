@@ -42,6 +42,12 @@ title: Explaining GTFS
 			The Calendar file includes a code (<i>service_id</i>) and which day of the week this code is associated with. 
 			This code is used to indicate the days the trip operates on.
 		</p>
+		<p><b>Frequencies:</b><br/>
+			The Frequencies file reports the headway between two successive buses on the same route. 
+			It also specifies the period in which the headway applies with the start time and the end time. 
+			The file includes the <i>trip_id</i> so that it can be connected to other information relating to the trip.
+		</p>
+
 		<h3>Relationships</h3>
 		<p>In order to fully utilize the information provided by the GTFS files, it is necessary to merge two files by field common to both. 
 			The following section explains how to join two files and what additional information the joined file provides. 
