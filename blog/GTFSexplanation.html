@@ -52,6 +52,7 @@ title: Explaining GTFS
 		<p><b>Frequencies:</b><br/>
 			The Frequencies file reports the headway between two successive buses on the same route. 
 			It also specifies the period in which the headway applies with the start time and the end time. 
+			This means that it is possible that one trip will have multiple rows in the frequencies table as seen in the example below. 
 			The file includes the <i>trip_id</i> so that it can be connected to other information relating to the trip.
 		</p>
 		<iframe src="GTFSexplanation_frequencies.html" frameborder="0" width="100%" height="260px"></iframe>
@@ -75,7 +76,9 @@ title: Explaining GTFS
 			Trips and Calendar can be joined by <i>trip_id</i>. 
 			This identifies on which days a specific trip will operate.  
 		</p>		
-		
+		<p><b>Trips + Frequencies</b><br/>
+			Trips and Frequencies can be joined by <i>trip_id</i>.
+			This shows the scheduled frequency of each trip. 
 
 
 	</div>
