@@ -14,7 +14,8 @@ title: Explaining GTFS
 		<h3>Files</h3>
 		<p>The GTFS data consists of multiple text files. 
 			The six main ones are Routes, Trips, Stop_Times, Calendar, and Frequencies. 
-			This section explains each of the main files within the GTFS data.
+			This section explains each of the main files within the GTFS data as well as an example of each file taken from SEPTA's GTFS from 
+			April 2020
 		</p>
 		<p><b>Routes:</b><br/>
 			The Route text file presents information of all the routes, including their route number and their route name. 
@@ -35,22 +36,25 @@ title: Explaining GTFS
 			It provides a unique identifier for each stop (<i>stop_id</i>) as well as its name. 
 			It also provides the location, specified with longitude and latitude. 
 		</p>
+		<iframe src="GTFSexplanation_stops.html" frameborder="0" width="100%" height="260px"></iframe>
 		<p><b>Stop-Times:</b><br/>
 			The Stop_times file marks the arrival and departure time at a stop. 
 			Each entry in the file records a stop made by a trip. 
 			Each entry also includes the unique trip identifier (<i>trip_id</i>), 
 			the unique stop identifier (<i>stop_id</i>) as well as the number indicating the sequence at which the stops are made. 
 		</p>
+		<iframe src="GTFSexplanation_stopTimes.html" frameborder="0" width="100%" height="260px"></iframe>
 		<p><b>Calendar:</b><br/>
 			The Calendar file includes a code (<i>service_id</i>) and which day of the week this code is associated with. 
 			This code is used to indicate the days the trip operates on.
 		</p>
+		<iframe src="GTFSexplanation_calendar.html" frameborder="0" width="100%" height="260px"></iframe>
 		<p><b>Frequencies:</b><br/>
 			The Frequencies file reports the headway between two successive buses on the same route. 
 			It also specifies the period in which the headway applies with the start time and the end time. 
 			The file includes the <i>trip_id</i> so that it can be connected to other information relating to the trip.
 		</p>
-
+		<iframe src="GTFSexplanation_frequencies.html" frameborder="0" width="100%" height="260px"></iframe>
 		<h3>Relationships</h3>
 		<p>In order to fully utilize the information provided by the GTFS files, it is necessary to merge two files by field common to both. 
 			The following section explains how to join two files and what additional information the joined file provides. 
