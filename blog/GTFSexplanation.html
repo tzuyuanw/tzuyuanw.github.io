@@ -52,7 +52,9 @@ title: Explaining GTFS
 		<p><b>Frequencies:</b><br/>
 			The Frequencies file reports the headway between two successive buses on the same route. 
 			It also specifies the period in which the headway applies with the start time and the end time. 
-			This means that it is possible that one trip will have multiple rows in the frequencies table as seen in the example below. 
+			This means that it is possible that one trip will have multiple rows in the frequencies table.
+			In the example below, the first three entries are all related to the same trip. 
+			This trip changes frequency during the day which results in three separate entries.
 			The file includes the <i>trip_id</i> so that it can be connected to other information relating to the trip.
 		</p>
 		<iframe src="GTFSexplanation_frequencies.html" frameborder="0" width="100%" height="260px"></iframe>
