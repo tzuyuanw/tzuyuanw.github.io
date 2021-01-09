@@ -35,6 +35,22 @@ p {
     line-height: 1.4em;
     color: #333;
 }
+/* Create two equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 33%;
+  padding: 10px;
+  /*height: 300px; /* Should be removed. Only for demonstration */
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+
+}
+
 footer {
     border-top: 1px solid #d5d5d5;
     font-size: .8em;
