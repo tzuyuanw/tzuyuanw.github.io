@@ -45,7 +45,7 @@ p {
     width: 33%;
 }
 .right {
-  width: 66%;
+    width: 66%;
 }
 
 /* Clear floats after the columns */
