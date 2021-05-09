@@ -4,7 +4,18 @@ var map = L.map('map', {
     zoom: 12,
     zoomControl: false
 });
-  
+
+/* var customMarker= L.Icon.extend({
+    options: {
+        shadowUrl: null,
+        iconAnchor: new L.Point(12, 12),
+        iconSize: new L.Point(24, 24),
+        iconUrl: 'geo-alt-fill.svg'
+    }
+  }); 
+  ,{icon: new customMarker()}
+  */
+
 var Stamen_TonerLite = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
     attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     subdomains: 'abcd',
@@ -52,6 +63,7 @@ var updateInfoCard = function(data){
     console.log(data[0].properties);
     $('#unavailable').hide();
     $('#noBike').hide();
+    $('#noDock').hide();
     var name = data[0].properties.name;
     var status = data[0].properties.kioskPublicStatus;
     var bikesAvailable = data[0].properties.bikesAvailable;
@@ -65,6 +77,9 @@ var updateInfoCard = function(data){
     }
     if(bikesAvailable == 0 && electricBikesAvailable == 0){
         $('#noBike').show();
+    }
+    if(docksAvailable == 0){
+        $('#noDock').show();
     }
     $('#results').show();
     $('#results').empty().append('<div id="' + name + '" style="margin-top:50px;margin-bottom:50px;"><strong style="font-size: x-large">' + name + '</strong>' + 
