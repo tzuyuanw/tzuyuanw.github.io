@@ -30,7 +30,7 @@ var stationDataURL = "https://kiosks.bicycletransit.workers.dev/phl";
 var stationData;
 var stationMarkers;
 var selectedStation;
-var usageData;
+//var usageData;
 
 //Functions
 var makeMarkers = function(data) {
@@ -73,6 +73,11 @@ var updateInfoCard = function(data){
     var bikesAvailable = data[0].properties.bikesAvailable;
     var electricBikesAvailable =  data[0].properties.electricBikesAvailable;
     var docksAvailable = data[0].properties.docksAvailable
+    var selectedUsageData = usageData.filter(function(usageData){
+        return usageData.stationID == data[0].properties.id
+    });
+    var avgTripStart = selectedUsageData[0].dailyTripStart.toFixed(1);
+    var avgTripEnd = selectedUsageData[0].dailyTripEnd.toFixed(1);
     if(status == "Unavailable"){            //if station unavailable
         bikesAvailable = "--";
         electricBikesAvailable = "--";
@@ -90,8 +95,12 @@ var updateInfoCard = function(data){
         '<br>Current Status: ' + status + 
         '<br>Number of Bikes Available: <strong style="font-size: large">' + bikesAvailable + '</strong>' + 
         '<br>Number of Electric Bikes Available: <strong style="font-size: large">' + electricBikesAvailable + '</strong>' + 
-        '<br>Number of Docks Available: <strong style="font-size: large">' + docksAvailable + '</strong>'
+        '<br>Number of Docks Available: <strong style="font-size: large">' + docksAvailable + '</strong>' + 
+        '<p></p><br>Number of Average Trips Originating from this station: <strong style="font-size: large">' + avgTripStart + '</strong>' +
+        '<br>Number of Average Trips Ending from this station: <strong style="font-size: large">' + avgTripEnd + '</strong>' 
     );
+
+
 }
 
 var updateUsageGraph = function(data){
