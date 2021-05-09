@@ -98,6 +98,7 @@ $(document).ready(function() {
         stationData = stationRes;
         stationMarkers = makeMarkers(stationData.features);
         plotMarkers(stationMarkers);
+        $('#loading').hide();
         $('.leaflet-marker-icon').click(function(e){
             markerClicked(e);
         })
