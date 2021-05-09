@@ -76,17 +76,15 @@ var updateInfoCard = function(data){
 }
 
 
-
-//load data
-$.when($.ajax(stationDataURL)).then(function(stationRes){
+//load page
+$(document).ready(function() {
     $('#openModal').modal('show');
-    $('#unavailable').hide();
-    $('#noBike').hide();
-    stationData = stationRes;
-    stationMarkers = makeMarkers(stationData.features);
-    plotMarkers(stationMarkers);
-    $('.leaflet-marker-icon').click(function(e){
-        markerClicked(e);
+    $.when($.ajax(stationDataURL)).then(function(stationRes){
+        stationData = stationRes;
+        stationMarkers = makeMarkers(stationData.features);
+        plotMarkers(stationMarkers);
+        $('.leaflet-marker-icon').click(function(e){
+            markerClicked(e);
+        })
     })
-
-})
+});
