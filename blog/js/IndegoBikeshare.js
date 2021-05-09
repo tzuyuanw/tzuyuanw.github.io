@@ -55,6 +55,11 @@ var updateInfoCard = function(data){
     var bikesAvailable = data[0].properties.bikesAvailable;
     var electricBikesAvailable =  data[0].properties.electricBikesAvailable;
     var docksAvailable = data[0].properties.docksAvailable
+    if(status == "Unavailable"){
+        bikesAvailable = "--";
+        electricBikesAvailable = "--";
+        docksAvailable = "--";
+    }
     $('#results').show()
     $('#results').empty().append('<div id="' + name + '" style="margin-top:50px;margin-bottom:50px;">' + name + 
         '<br>Current Status: ' + status + 
