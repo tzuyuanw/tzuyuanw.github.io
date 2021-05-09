@@ -50,6 +50,8 @@ var markerClicked = function(e){
 
 var updateInfoCard = function(data){
     console.log(data[0].properties);
+    $('#unavailable').hide();
+    $('#noBike').hide();
     var name = data[0].properties.name;
     var status = data[0].properties.kioskPublicStatus;
     var bikesAvailable = data[0].properties.bikesAvailable;
@@ -59,13 +61,17 @@ var updateInfoCard = function(data){
         bikesAvailable = "--";
         electricBikesAvailable = "--";
         docksAvailable = "--";
+        $('#unavailable').show();
     }
-    $('#results').show()
-    $('#results').empty().append('<div id="' + name + '" style="margin-top:50px;margin-bottom:50px;">' + name + 
+    if(bikesAvailable == 0 && electricBikesAvailable == 0){
+        $('#noBike').show();
+    }
+    $('#results').show();
+    $('#results').empty().append('<div id="' + name + '" style="margin-top:50px;margin-bottom:50px;"><strong style="font-size: x-large">' + name + '</strong>' + 
         '<br>Current Status: ' + status + 
-        '<br>Number of Bikes Available: ' + bikesAvailable +
-        '<br>Number of Electric Bikes Available: ' + electricBikesAvailable +
-        '<br>Number of Docks Available: ' + docksAvailable
+        '<br>Number of Bikes Available: <strong style="font-size: large">' + bikesAvailable + '</strong>' + 
+        '<br>Number of Electric Bikes Available: <strong style="font-size: large">' + electricBikesAvailable + '</strong>' + 
+        '<br>Number of Docks Available: <strong style="font-size: large">' + docksAvailable + '</strong>'
     );
 }
 
@@ -73,6 +79,9 @@ var updateInfoCard = function(data){
 
 //load data
 $.when($.ajax(stationDataURL)).then(function(stationRes){
+    $('#openModal').modal('show');
+    $('#unavailable').hide();
+    $('#noBike').hide();
     stationData = stationRes;
     stationMarkers = makeMarkers(stationData.features);
     plotMarkers(stationMarkers);

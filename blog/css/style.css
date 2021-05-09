@@ -37,3 +37,10 @@ body {
     z-index: 0;
 }
 
+#results {
+    position:absolute;
+    margin-top:50px;
+    margin-bottom:50px;
+    top: 120px;
+}
+
