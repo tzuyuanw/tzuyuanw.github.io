@@ -96,8 +96,8 @@ var updateInfoCard = function(data){
         '<br>Number of Bikes Available: <strong style="font-size: large">' + bikesAvailable + '</strong>' + 
         '<br>Number of Electric Bikes Available: <strong style="font-size: large">' + electricBikesAvailable + '</strong>' + 
         '<br>Number of Docks Available: <strong style="font-size: large">' + docksAvailable + '</strong>' + 
-        '<p></p><br>Number of Average Trips Originating from this station: <strong style="font-size: large">' + avgTripStart + '</strong>' +
-        '<br>Number of Average Trips Ending from this station: <strong style="font-size: large">' + avgTripEnd + '</strong>' 
+        '<p></p><br>Number of Average Trips Originating Here: <strong style="font-size: large">' + avgTripStart + '</strong>' +
+        '<br>Number of Average Trips Ending Here: <strong style="font-size: large">' + avgTripEnd + '</strong>' 
     );
 
 
