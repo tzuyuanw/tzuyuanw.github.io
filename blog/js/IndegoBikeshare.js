@@ -1,6 +1,6 @@
 //Set up map
 var map = L.map('map', {
-    center: [39.9450, -75.201388],
+    center: [39.9430, -75.201388],
     zoom: 13,
     zoomControl: false
 });
@@ -98,6 +98,16 @@ var updateUsageGraph = function(data){
     
 }
 
+var getdata = function(){
+    $.ajax({
+        url: stationDataURL,
+        success: function(data){
+            stationData = data;
+            console.log("getting new data");
+        }
+    })
+}
+
 //load page
 $(document).ready(function() {
     $('#openModal').modal('show');
@@ -109,5 +119,18 @@ $(document).ready(function() {
         $('.leaflet-marker-icon').click(function(e){
             markerClicked(e);
         })
+        setInterval(getdata, 30000);
     })
 });
+
+/* 
+$.ajax({
+    url: "https://www3.septa.org/hackathon/TransitViewAll/",
+  
+   dataType: "jsonp",
+    success: function(data){
+      testData = data;
+    }
+  }); 
+  testData.routes[0]["BLVDDIR"]
+  */
