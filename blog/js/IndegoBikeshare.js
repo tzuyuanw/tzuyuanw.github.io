@@ -30,6 +30,9 @@ var stationDataURL = "https://kiosks.bicycletransit.workers.dev/phl";
 var stationData;
 var stationMarkers;
 var selectedStation;
+var selectedOD;
+var stationLines;
+var selectedLines = [];
 //var usageData;
 
 //Functions
@@ -41,26 +44,41 @@ var makeMarkers = function(data) {
     })
 };
 
-var plotMarkers = function(marker) {
+var makeLines = function(data){
+    return _.map(data,function(OD){
+        var latlngs = [
+            [OD.start_lat, OD.start_lon],
+            [OD.end_lat, OD.end_lon]
+        ];
+        return L.polyline(latlngs)
+    })
+}
+
+var plot = function(marker) {
     _.each(marker,function(marker){
         marker.addTo(map);
     })
 };
 
-var markerClicked = function(e){
+var remove = function(marker){
+    _.each(marker,function(marker){
+        map.removeLayer(marker);
+    })
+};
+
+var findClickedMarker = function(e){
     //find clicked marker
     selectedMarker = stationMarkers.filter(function(data){
         return data._leaflet_id === e.currentTarget._leaflet_id - 1 ;
     });
     selectedLat = selectedMarker[0]._latlng.lat;
     console.log(selectedMarker);
-    console.log(selectedLat);
+    //console.log(selectedLat);
     selectedStation = stationData.features.filter(function(data){
         return data.geometry.coordinates[1] === selectedLat;
     })
+    return selectedStation;
     //update infoCardInformation
-    updateInfoCard(selectedStation);
-    updateUsageGraph(selectedStation);
 }
 
 var updateInfoCard = function(data){
@@ -105,10 +123,6 @@ var updateInfoCard = function(data){
 
 }
 
-var updateUsageGraph = function(data){
-    
-}
-
 var getdata = function(){
     $.ajax({
         url: stationDataURL,
@@ -125,10 +139,24 @@ $(document).ready(function() {
     $.when($.ajax(stationDataURL)).then(function(stationRes){
         stationData = stationRes;
         stationMarkers = makeMarkers(stationData.features);
-        plotMarkers(stationMarkers);
+        plot(stationMarkers);
+        //stationLines = makeLines(indegoOD);
         $('#loading').hide();
         $('.leaflet-marker-icon').click(function(e){
-            markerClicked(e);
+            remove(selectedLines);
+            selectedStation = findClickedMarker(e);
+            if($('#liveView').is(":checked")){
+                updateInfoCard(selectedStation);
+            }else{
+                $('#results').hide();
+                selectedOD = indegoOD.filter(function(data){
+                    return data.start_station == selectedStation[0].properties.id
+                })
+                selectedLines = makeLines(selectedOD)
+                plot(selectedLines);
+
+
+            } 
         })
         setInterval(getdata, 30000);
     })
