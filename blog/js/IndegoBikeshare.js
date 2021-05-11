@@ -50,7 +50,7 @@ var makeLines = function(data){
             [OD.start_lat, OD.start_lon],
             [OD.end_lat, OD.end_lon]
         ];
-        return L.polyline(latlngs)
+        return L.polyline(latlngs,{opacity: OD.count/196})
     })
 }
 
@@ -140,14 +140,32 @@ $(document).ready(function() {
         stationData = stationRes;
         stationMarkers = makeMarkers(stationData.features);
         plot(stationMarkers);
-        //stationLines = makeLines(indegoOD);
         $('#loading').hide();
+        $('#dataView').click(function(e){
+            console.log(e.target.checked);
+            if($('#dataView').is(":checked") && selectedStation != undefined){
+                $('#results').hide();
+                selectedOD = indegoOD.filter(function(data){
+                    return data.start_station == selectedStation[0].properties.id
+                })
+                selectedLines = makeLines(selectedOD)
+                plot(selectedLines);
+            }
+        })
+        $('#liveView').click(function(e){
+            console.log(e.target.checked);
+            if($('#liveView').is(":checked") && selectedStation != undefined){
+                $('#results').show();
+                remove(selectedLines);
+            }
+        })
         $('.leaflet-marker-icon').click(function(e){
             remove(selectedLines);
             selectedStation = findClickedMarker(e);
             if($('#liveView').is(":checked")){
                 updateInfoCard(selectedStation);
             }else{
+                updateInfoCard(selectedStation);
                 $('#results').hide();
                 selectedOD = indegoOD.filter(function(data){
                     return data.start_station == selectedStation[0].properties.id
