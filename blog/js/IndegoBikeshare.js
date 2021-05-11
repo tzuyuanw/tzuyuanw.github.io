@@ -50,9 +50,10 @@ var makeLines = function(data){
             [OD.start_lat, OD.start_lon],
             [OD.end_lat, OD.end_lon]
         ];
-        return L.polyline(latlngs,{opacity: OD.count/196})
+        return L.polyline(latlngs,{opacity: OD.count/100})
     })
 }
+//196
 
 var plot = function(marker) {
     _.each(marker,function(marker){
@@ -142,9 +143,11 @@ $(document).ready(function() {
         plot(stationMarkers);
         $('#loading').hide();
         $('#dataView').click(function(e){
-            console.log(e.target.checked);
             if($('#dataView').is(":checked") && selectedStation != undefined){
                 $('#results').hide();
+                $('#unavailable').hide();       //hide alert
+                $('#noBike').hide();            //hide alert
+                $('#noDock').hide();   
                 selectedOD = indegoOD.filter(function(data){
                     return data.start_station == selectedStation[0].properties.id
                 })
@@ -153,9 +156,9 @@ $(document).ready(function() {
             }
         })
         $('#liveView').click(function(e){
-            console.log(e.target.checked);
             if($('#liveView').is(":checked") && selectedStation != undefined){
-                $('#results').show();
+                //$('#results').show();
+                updateInfoCard(selectedStation);
                 remove(selectedLines);
             }
         })
