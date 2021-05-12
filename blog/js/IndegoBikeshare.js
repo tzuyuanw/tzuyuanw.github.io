@@ -67,19 +67,17 @@ var remove = function(marker){
     })
 };
 
+//find clicked marker
 var findClickedMarker = function(e){
-    //find clicked marker
     selectedMarker = stationMarkers.filter(function(data){
         return data._leaflet_id === e.currentTarget._leaflet_id - 1 ;
     });
     selectedLat = selectedMarker[0]._latlng.lat;
     console.log(selectedMarker);
-    //console.log(selectedLat);
     selectedStation = stationData.features.filter(function(data){
         return data.geometry.coordinates[1] === selectedLat;
     })
     return selectedStation;
-    //update infoCardInformation
 }
 
 var updateInfoCard = function(data){
@@ -97,8 +95,8 @@ var updateInfoCard = function(data){
     });
     var avgTripStart = selectedUsageData[0].dailyTripStart.toFixed(1);
     var avgTripEnd = selectedUsageData[0].dailyTripEnd.toFixed(1);
-    if($('#liveView').is(":checked")){
-        if(status == "Unavailable"){            //if station unavailable
+    if($('#liveView').is(":checked")){                          //if in live view 
+        if(status == "Unavailable"){                                //if station unavailable
             bikesAvailable = "--";
             electricBikesAvailable = "--";
             docksAvailable = "--";
@@ -117,7 +115,7 @@ var updateInfoCard = function(data){
             '<br>Number of Electric Bikes Available: <strong style="font-size: large">' + electricBikesAvailable + '</strong>' + 
             '<br>Number of Docks Available: <strong style="font-size: large">' + docksAvailable + '</strong>'
         );
-    }else{
+    }else{                                                      //if in data view
         $('#results').show();
         $('#results').empty().append('<div id="' + name + '" style="margin-top:50px;margin-bottom:50px;"><strong style="font-size: x-large">' + name + '</strong>' + 
             '<br>According to data from January to March 2021: ' + 
