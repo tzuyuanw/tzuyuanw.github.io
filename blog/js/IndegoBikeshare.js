@@ -115,14 +115,15 @@ var updateInfoCard = function(data){
             '<br>Current Status: ' + status + 
             '<br>Number of Bikes Available: <strong style="font-size: large">' + bikesAvailable + '</strong>' + 
             '<br>Number of Electric Bikes Available: <strong style="font-size: large">' + electricBikesAvailable + '</strong>' + 
-            '<br>Number of Docks Available: <strong style="font-size: large">' + docksAvailable + '</strong>' + 
-            '<p></p>'+
-            '<br>According to data from January to March 2021: ' + 
-            '<br><strong style="font-size: large">' + avgTripStart + '</strong> trips originate daily from this station.' +
-            '<br><strong style="font-size: large">' + avgTripEnd + '</strong> trips end daily at this station.' 
+            '<br>Number of Docks Available: <strong style="font-size: large">' + docksAvailable + '</strong>'
         );
     }else{
-        $('#results').hide();
+        $('#results').show();
+        $('#results').empty().append('<div id="' + name + '" style="margin-top:50px;margin-bottom:50px;"><strong style="font-size: x-large">' + name + '</strong>' + 
+            '<br>According to data from January to March 2021: ' + 
+            '<br><strong style="font-size: large">' + avgTripStart + '</strong> trips originate daily from this station.' +
+            '<br><strong style="font-size: large">' + avgTripEnd + '</strong> trips end daily at this station.'
+        );
         $('#unavailable').hide();       //hide alert
         $('#noBike').hide();            //hide alert
         $('#noDock').hide();  
