@@ -97,31 +97,36 @@ var updateInfoCard = function(data){
     });
     var avgTripStart = selectedUsageData[0].dailyTripStart.toFixed(1);
     var avgTripEnd = selectedUsageData[0].dailyTripEnd.toFixed(1);
-    if(status == "Unavailable"){            //if station unavailable
-        bikesAvailable = "--";
-        electricBikesAvailable = "--";
-        docksAvailable = "--";
-        $('#unavailable').show();
+    if($('#liveView').is(":checked")){
+        if(status == "Unavailable"){            //if station unavailable
+            bikesAvailable = "--";
+            electricBikesAvailable = "--";
+            docksAvailable = "--";
+            $('#unavailable').show();
+        }
+        if(bikesAvailable == 0 && electricBikesAvailable == 0){     //if no bikes available
+            $('#noBike').show();
+        }
+        if(docksAvailable == 0){                                    // if no docks available
+            $('#noDock').show();
+        }
+        $('#results').show();
+        $('#results').empty().append('<div id="' + name + '" style="margin-top:50px;margin-bottom:50px;"><strong style="font-size: x-large">' + name + '</strong>' + 
+            '<br>Current Status: ' + status + 
+            '<br>Number of Bikes Available: <strong style="font-size: large">' + bikesAvailable + '</strong>' + 
+            '<br>Number of Electric Bikes Available: <strong style="font-size: large">' + electricBikesAvailable + '</strong>' + 
+            '<br>Number of Docks Available: <strong style="font-size: large">' + docksAvailable + '</strong>' + 
+            '<p></p>'+
+            '<br>According to data from January to March 2021: ' + 
+            '<br><strong style="font-size: large">' + avgTripStart + '</strong> trips originate daily from this station.' +
+            '<br><strong style="font-size: large">' + avgTripEnd + '</strong> trips end daily at this station.' 
+        );
+    }else{
+        $('#results').hide();
+        $('#unavailable').hide();       //hide alert
+        $('#noBike').hide();            //hide alert
+        $('#noDock').hide();  
     }
-    if(bikesAvailable == 0 && electricBikesAvailable == 0){     //if no bikes available
-        $('#noBike').show();
-    }
-    if(docksAvailable == 0){                                    // if no docks available
-        $('#noDock').show();
-    }
-    $('#results').show();
-    $('#results').empty().append('<div id="' + name + '" style="margin-top:50px;margin-bottom:50px;"><strong style="font-size: x-large">' + name + '</strong>' + 
-        '<br>Current Status: ' + status + 
-        '<br>Number of Bikes Available: <strong style="font-size: large">' + bikesAvailable + '</strong>' + 
-        '<br>Number of Electric Bikes Available: <strong style="font-size: large">' + electricBikesAvailable + '</strong>' + 
-        '<br>Number of Docks Available: <strong style="font-size: large">' + docksAvailable + '</strong>' + 
-        '<p></p>'+
-        '<br>According to data from January to March 2021: ' + 
-        '<br><strong style="font-size: large">' + avgTripStart + '</strong> trips originate daily from this station.' +
-        '<br><strong style="font-size: large">' + avgTripEnd + '</strong> trips end daily at this station.' 
-    );
-
-
 }
 
 var getdata = function(){
@@ -142,12 +147,10 @@ $(document).ready(function() {
         stationMarkers = makeMarkers(stationData.features);
         plot(stationMarkers);
         $('#loading').hide(); //hide load spinner when done plotting 
+        //For when switching between views after a marker is clicked
         $('#dataView').click(function(e){
-            if($('#dataView').is(":checked") && selectedStation != undefined){
-                $('#results').hide();
-                $('#unavailable').hide();       //hide alert
-                $('#noBike').hide();            //hide alert
-                $('#noDock').hide();   
+            if(selectedStation != undefined){
+                updateInfoCard(selectedStation);
                 selectedOD = indegoOD.filter(function(data){
                     return data.start_station == selectedStation[0].properties.id
                 })
@@ -156,8 +159,7 @@ $(document).ready(function() {
             }
         })
         $('#liveView').click(function(e){
-            if($('#liveView').is(":checked") && selectedStation != undefined){
-                //$('#results').show();
+            if(selectedStation != undefined){
                 updateInfoCard(selectedStation);
                 remove(selectedLines);
             }
@@ -165,21 +167,13 @@ $(document).ready(function() {
         $('.leaflet-marker-icon').click(function(e){
             remove(selectedLines);
             selectedStation = findClickedMarker(e);
-            if($('#liveView').is(":checked")){
-                updateInfoCard(selectedStation);
-            }else{
-                updateInfoCard(selectedStation);
-                $('#results').hide();
-                $('#unavailable').hide();       //hide alert
-                $('#noBike').hide();            //hide alert
-                $('#noDock').hide();  
+            updateInfoCard(selectedStation);
+            if($('#dataView').is(":checked")){
                 selectedOD = indegoOD.filter(function(data){
                     return data.start_station == selectedStation[0].properties.id
                 })
                 selectedLines = makeLines(selectedOD)
                 plot(selectedLines);
-
-
             } 
         })
         setInterval(getdata, 30000);
