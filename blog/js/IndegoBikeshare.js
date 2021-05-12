@@ -135,6 +135,12 @@ var getdata = function(){
     })
 }
 
+var filterOD = function(indegoOD){
+    return indegoOD.filter(function(data){
+        return data.start_station == selectedStation[0].properties.id
+    })
+}
+
 //load page
 $(document).ready(function() {
     $('#openModal').modal('show');
@@ -147,10 +153,8 @@ $(document).ready(function() {
         $('#dataView').click(function(e){
             if(selectedStation != undefined){
                 updateInfoCard(selectedStation);
-                selectedOD = indegoOD.filter(function(data){
-                    return data.start_station == selectedStation[0].properties.id
-                })
-                selectedLines = makeLines(selectedOD)
+                selectedOD = filterOD(indegoOD);
+                selectedLines = makeLines(selectedOD);
                 plot(selectedLines);
             }
         })
@@ -165,10 +169,8 @@ $(document).ready(function() {
             selectedStation = findClickedMarker(e);
             updateInfoCard(selectedStation);
             if($('#dataView').is(":checked")){
-                selectedOD = indegoOD.filter(function(data){
-                    return data.start_station == selectedStation[0].properties.id
-                })
-                selectedLines = makeLines(selectedOD)
+                selectedOD = filterOD(indegoOD);
+                selectedLines = makeLines(selectedOD);
                 plot(selectedLines);
             } 
         })
