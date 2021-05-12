@@ -153,6 +153,7 @@ $(document).ready(function() {
         $('#dataView').click(function(e){
             if(selectedStation != undefined){
                 updateInfoCard(selectedStation);
+                remove(selectedLines);
                 selectedOD = filterOD(indegoOD);
                 selectedLines = makeLines(selectedOD);
                 plot(selectedLines);
