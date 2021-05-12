@@ -124,9 +124,6 @@ var updateInfoCard = function(data){
             '<br><strong style="font-size: large">' + avgTripStart + '</strong> trips originate daily from this station.' +
             '<br><strong style="font-size: large">' + avgTripEnd + '</strong> trips end daily at this station.'
         );
-        $('#unavailable').hide();       //hide alert
-        $('#noBike').hide();            //hide alert
-        $('#noDock').hide();  
     }
 }
 
