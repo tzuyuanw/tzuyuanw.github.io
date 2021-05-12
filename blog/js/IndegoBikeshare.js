@@ -50,7 +50,7 @@ var makeLines = function(data){
             [OD.start_lat, OD.start_lon],
             [OD.end_lat, OD.end_lon]
         ];
-        return L.polyline(latlngs,{opacity: OD.count/100})
+        return L.polyline(latlngs,{opacity: Math.max(OD.count/100, 0.2)})
     })
 }
 //196
