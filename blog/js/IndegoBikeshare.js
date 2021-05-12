@@ -141,7 +141,7 @@ $(document).ready(function() {
         stationData = stationRes;
         stationMarkers = makeMarkers(stationData.features);
         plot(stationMarkers);
-        $('#loading').hide();
+        $('#loading').hide(); //hide load spinner when done plotting 
         $('#dataView').click(function(e){
             if($('#dataView').is(":checked") && selectedStation != undefined){
                 $('#results').hide();
@@ -170,6 +170,9 @@ $(document).ready(function() {
             }else{
                 updateInfoCard(selectedStation);
                 $('#results').hide();
+                $('#unavailable').hide();       //hide alert
+                $('#noBike').hide();            //hide alert
+                $('#noDock').hide();  
                 selectedOD = indegoOD.filter(function(data){
                     return data.start_station == selectedStation[0].properties.id
                 })
