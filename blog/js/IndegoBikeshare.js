@@ -93,8 +93,11 @@ var updateInfoCard = function(data){
     var selectedUsageData = usageData.filter(function(usageData){
         return usageData.stationID == data[0].properties.id
     });
-    var avgTripStart = selectedUsageData[0].dailyTripStart.toFixed(1);
-    var avgTripEnd = selectedUsageData[0].dailyTripEnd.toFixed(1);
+    console.log("selectedUsageData",selectedUsageData.length == 0);
+    if(selectedUsageData.length != 0){
+        var avgTripStart = selectedUsageData[0].dailyTripStart.toFixed(1);
+        var avgTripEnd = selectedUsageData[0].dailyTripEnd.toFixed(1);
+    }
     if($('#liveView').is(":checked")){                          //if in live view 
         if(status == "Unavailable"){                                //if station unavailable
             bikesAvailable = "--";
@@ -116,12 +119,19 @@ var updateInfoCard = function(data){
             '<br>Number of Docks Available: <strong style="font-size: large">' + docksAvailable + '</strong>'
         );
     }else{                                                      //if in data view
-        $('#results').show();
-        $('#results').empty().append('<div id="' + name + '" style="margin-top:50px;margin-bottom:50px;"><strong style="font-size: x-large">' + name + '</strong>' + 
-            '<br>According to data from January to March 2021: ' + 
-            '<br><strong style="font-size: large">' + avgTripStart + '</strong> trips originate daily from this station.' +
-            '<br><strong style="font-size: large">' + avgTripEnd + '</strong> trips end daily at this station.'
-        );
+        if(avgTripStart == undefined){
+            $('#results').show();
+            $('#results').empty().append('<div id="' + name + '" style="margin-top:50px;margin-bottom:50px;"><strong style="font-size: x-large">' + name + '</strong>' + 
+                '<br>No data available.'
+            );
+        }else{
+            $('#results').show();
+            $('#results').empty().append('<div id="' + name + '" style="margin-top:50px;margin-bottom:50px;"><strong style="font-size: x-large">' + name + '</strong>' + 
+                '<br>According to data from January to March 2021: ' + 
+                '<br><strong style="font-size: large">' + avgTripStart + '</strong> trips originate daily from this station.' +
+                '<br><strong style="font-size: large">' + avgTripEnd + '</strong> trips end daily at this station.'
+            );
+        }
     }
 }
 
