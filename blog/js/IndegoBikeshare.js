@@ -93,7 +93,6 @@ var updateInfoCard = function(data){
     var selectedUsageData = usageData.filter(function(usageData){
         return usageData.stationID == data[0].properties.id
     });
-    console.log("selectedUsageData",selectedUsageData.length == 0);
     if(selectedUsageData.length != 0){
         var avgTripStart = selectedUsageData[0].dailyTripStart.toFixed(1);
         var avgTripEnd = selectedUsageData[0].dailyTripEnd.toFixed(1);
