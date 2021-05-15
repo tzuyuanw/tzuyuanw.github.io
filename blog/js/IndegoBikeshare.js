@@ -119,24 +119,25 @@ var updateInfoCard = function(data){
             '<br>Number of Docks Available: <strong style="font-size: large">' + docksAvailable + '</strong>'
         );
     }else{                                                      //if in data view
-        var tripsRank1 = (selectedOD[selectedOD.length - 1].count / 90).toFixed(1);
-        var tripsRank2 = (selectedOD[selectedOD.length - 2].count / 90).toFixed(1);
-        var tripsRank3 = (selectedOD[selectedOD.length - 3].count / 90).toFixed(1);
-        var stationRank1 = stationData.features.filter(function(data){
-                                return data.properties.kioskId == selectedOD[selectedOD.length - 1].end_station;
-                            })[0].properties.name;
-        var stationRank2 = stationData.features.filter(function(data){
-                                return data.properties.kioskId == selectedOD[selectedOD.length - 2].end_station;
-                            })[0].properties.name;
-        var stationRank3 = stationData.features.filter(function(data){
-                                return data.properties.kioskId == selectedOD[selectedOD.length - 3].end_station;
-                            })[0].properties.name;
+
         if(avgTripStart == undefined){
             $('#results').show();
             $('#results').empty().append('<div id="' + name + '" style="margin-top:50px;margin-bottom:50px;"><strong style="font-size: x-large">' + name + '</strong>' + 
                 '<br>No data available.'
             );
         }else{
+            var tripsRank1 = (selectedOD[selectedOD.length - 1].count / 90).toFixed(1);
+            var tripsRank2 = (selectedOD[selectedOD.length - 2].count / 90).toFixed(1);
+            var tripsRank3 = (selectedOD[selectedOD.length - 3].count / 90).toFixed(1);
+            var stationRank1 = stationData.features.filter(function(data){
+                                    return data.properties.kioskId == selectedOD[selectedOD.length - 1].end_station;
+                                })[0].properties.name;
+            var stationRank2 = stationData.features.filter(function(data){
+                                    return data.properties.kioskId == selectedOD[selectedOD.length - 2].end_station;
+                                })[0].properties.name;
+            var stationRank3 = stationData.features.filter(function(data){
+                                    return data.properties.kioskId == selectedOD[selectedOD.length - 3].end_station;
+                                })[0].properties.name;
             $('#results').show();
             $('#results').empty().append('<div id="' + name + '" style="margin-top:50px;margin-bottom:50px;"><strong style="font-size: x-large">' + name + '</strong>' + 
                 '<br>According to data from January to March 2021: ' + 
