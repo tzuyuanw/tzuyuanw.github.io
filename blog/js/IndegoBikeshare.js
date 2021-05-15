@@ -96,6 +96,7 @@ var updateInfoCard = function(data){
     if(selectedUsageData.length != 0){
         var avgTripStart = selectedUsageData[0].dailyTripStart.toFixed(1);
         var avgTripEnd = selectedUsageData[0].dailyTripEnd.toFixed(1);
+
     }
     if($('#liveView').is(":checked")){                          //if in live view 
         if(status == "Unavailable"){                                //if station unavailable
@@ -118,6 +119,18 @@ var updateInfoCard = function(data){
             '<br>Number of Docks Available: <strong style="font-size: large">' + docksAvailable + '</strong>'
         );
     }else{                                                      //if in data view
+        var tripsRank1 = (selectedOD[selectedOD.length - 1].count / 90).toFixed(1);
+        var tripsRank2 = (selectedOD[selectedOD.length - 2].count / 90).toFixed(1);
+        var tripsRank3 = (selectedOD[selectedOD.length - 3].count / 90).toFixed(1);
+        var stationRank1 = stationData.features.filter(function(data){
+                                return data.properties.kioskId == selectedOD[selectedOD.length - 1].end_station;
+                            })[0].properties.name;
+        var stationRank2 = stationData.features.filter(function(data){
+                                return data.properties.kioskId == selectedOD[selectedOD.length - 2].end_station;
+                            })[0].properties.name;
+        var stationRank3 = stationData.features.filter(function(data){
+                                return data.properties.kioskId == selectedOD[selectedOD.length - 3].end_station;
+                            })[0].properties.name;
         if(avgTripStart == undefined){
             $('#results').show();
             $('#results').empty().append('<div id="' + name + '" style="margin-top:50px;margin-bottom:50px;"><strong style="font-size: x-large">' + name + '</strong>' + 
@@ -128,7 +141,11 @@ var updateInfoCard = function(data){
             $('#results').empty().append('<div id="' + name + '" style="margin-top:50px;margin-bottom:50px;"><strong style="font-size: x-large">' + name + '</strong>' + 
                 '<br>According to data from January to March 2021: ' + 
                 '<br><strong style="font-size: large">' + avgTripStart + '</strong> trips originate daily from this station.' +
-                '<br><strong style="font-size: large">' + avgTripEnd + '</strong> trips end daily at this station.'
+                '<br><strong style="font-size: large">' + avgTripEnd + '</strong> trips end daily at this station.' + 
+                '<table class="table"><thead><tr><th scope="col">Rank</th><th scope="col">Destination</th><th scope="col">Trips</th></tr></thead>' + 
+                '<tbody><tr><th scope="row">1</th><td>' + stationRank1 + '</td><td>' + tripsRank1 + '</td></tr>'+
+                '<tr><th scope="row">2</th><td>' + stationRank2 + '</td><td>' + tripsRank2 + '</td></tr>' +
+                '<tr><th scope="row">3</th><td>' + stationRank3 + '</td><td>' + tripsRank3 + '</td></tr></tbody></table>'
             );
         }
     }
@@ -145,9 +162,12 @@ var getdata = function(){
 }
 
 var filterOD = function(indegoOD){
-    return indegoOD.filter(function(data){
+    var sortedIndegoOD = indegoOD.filter(function(data){
         return data.start_station == selectedStation[0].properties.id
     })
+    sortedIndegoOD = _.sortBy(sortedIndegoOD, 'count');
+
+    return sortedIndegoOD;
 }
 
 //load page
@@ -161,11 +181,11 @@ $(document).ready(function() {
         //For when switching between views after a marker is clicked
         $('#dataView').click(function(e){
             if(selectedStation != undefined){
-                updateInfoCard(selectedStation);
                 remove(selectedLines);
                 selectedOD = filterOD(indegoOD);
                 selectedLines = makeLines(selectedOD);
                 plot(selectedLines);
+                updateInfoCard(selectedStation);
             }
         })
         $('#liveView').click(function(e){
@@ -177,12 +197,12 @@ $(document).ready(function() {
         $('.leaflet-marker-icon').click(function(e){
             remove(selectedLines);
             selectedStation = findClickedMarker(e);
-            updateInfoCard(selectedStation);
             if($('#dataView').is(":checked")){
                 selectedOD = filterOD(indegoOD);
                 selectedLines = makeLines(selectedOD);
                 plot(selectedLines);
             } 
+            updateInfoCard(selectedStation);
         })
         setInterval(getdata, 30000);
     })

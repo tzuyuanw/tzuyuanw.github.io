@@ -28,6 +28,10 @@ body {
     opacity: 0.5;
 }
 
+.table{
+    width: 341px;
+}
+
 #map {
     position: absolute;
     right: 0px;
