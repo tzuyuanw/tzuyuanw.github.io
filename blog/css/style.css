@@ -29,7 +29,7 @@ body {
 }
 
 .table{
-    width: 341px;
+    width: 341px !important;
 }
 
 #map {
