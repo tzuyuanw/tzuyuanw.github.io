@@ -143,10 +143,13 @@ var updateInfoCard = function(data){
                 '<br>According to data from January to March 2021: ' + 
                 '<br><strong style="font-size: large">' + avgTripStart + '</strong> trips originate daily from this station.' +
                 '<br><strong style="font-size: large">' + avgTripEnd + '</strong> trips end daily at this station.' + 
-                '<div class="table"><table class="table"><thead><tr><th scope="col">Rank</th><th scope="col">Destination</th><th scope="col">Trips</th></tr></thead>' + 
+                '<br>' + 
+                '<br><br><p><b>Top three destination by average daily trips:</b></p>' +
+                '<div class="table"><table class="table">' + 
+                '<thead><tr><th scope="col">Rank</th><th scope="col">Destination</th><th scope="col">Trips</th></tr></thead>' + 
                 '<tbody><tr><th scope="row">1</th><td>' + stationRank1 + '</td><td>' + tripsRank1 + '</td></tr>'+
                 '<tr><th scope="row">2</th><td>' + stationRank2 + '</td><td>' + tripsRank2 + '</td></tr>' +
-                '<tr><th scope="row">3</th><td>' + stationRank3 + '</td><td>' + tripsRank3 + '</td></tr></tbody></table></div>'
+                '<tr><th scope="row">3</th><td>' + stationRank3 + '</td><td>' + tripsRank3 + '</td></tr></tbody></table></div></div>'
             );
         }
     }
