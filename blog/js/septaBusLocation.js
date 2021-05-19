@@ -2,6 +2,24 @@ var routes;
 var locationData;
 var markers;
 
+//Set up map
+var map = L.map('map', {
+    center: [39.9430, -75.201388],
+    zoom: 13,
+    zoomControl: false
+});
+
+var Stamen_TonerLite = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+    attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    subdomains: 'abcd',
+    minZoom: 0,
+    maxZoom: 20,
+    ext: 'png'
+}).addTo(map);
+new L.Control.Zoom({ position: 'topright' }).addTo(map);
+
+
+//FUNCTIONS
 var cleanData = function(data){
     locationData = data.routes[0];
     routes = Object.keys(data.routes[0]) // create an array of routes
@@ -10,7 +28,9 @@ var cleanData = function(data){
             data.route = route
         })
     })
+    
 }
+
 
 
 $.ajax({
@@ -21,7 +41,7 @@ $.ajax({
       cleanData(data);
     }
   }); 
-  //testData.routes[0]["BLVDDIR"]
+
 
 
   // use two for each to create marker 
