@@ -1,6 +1,8 @@
 var routes;
 var locationData;
+var locationDataClean;
 var markers;
+var dataURL = "https://www3.septa.org/hackathon/TransitViewAll/"
 
 //Set up map
 var map = L.map('map', {
@@ -18,6 +20,15 @@ var Stamen_TonerLite = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{
 }).addTo(map);
 new L.Control.Zoom({ position: 'topright' }).addTo(map);
 
+var customMarker= L.Icon.extend({
+    options: {
+        shadowUrl: null,
+        iconAnchor: new L.Point(12, 24),
+        iconSize: new L.Point(24, 24),
+        iconUrl: 'geo-alt.svg'
+    }
+  }); 
+
 
 //FUNCTIONS
 var cleanData = function(data){
@@ -28,20 +39,49 @@ var cleanData = function(data){
             data.route = route
         })
     })
-    
+    locationDataClean = _.compact(_.flatten(_.unzip(locationData)));
+}
+
+var makeMarkers = function(data) {
+    return _.map(data,function(bus){
+        var lat = bus.lat;
+        var lng = bus.lng;
+        return L.marker([lat,lng],{icon: new customMarker()}).bindPopup(bus.route);
+    })
+};
+
+var plot = function(marker) {
+    _.each(marker,function(marker){
+        marker.addTo(map);
+    })
+};
+
+var remove = function(marker){
+    _.each(marker,function(marker){
+        map.removeLayer(marker);
+    })
+};
+
+var getdata = function(){
+    $.ajax({
+        url: "https://www3.septa.org/hackathon/TransitViewAll/",
+        dataType: "jsonp",
+        success: function(data){
+            remove(markers);
+            cleanData(data);
+            markers = makeMarkers(locationDataClean);
+            plot(markers);
+            console.log("update");
+        }
+    });
 }
 
 
-
-$.ajax({
-    url: "https://www3.septa.org/hackathon/TransitViewAll/",
-  
-   dataType: "jsonp",
-    success: function(data){
-      cleanData(data);
-    }
-  }); 
-
-
-
-  // use two for each to create marker 
+$(document).ready(function(){
+    $.when($.ajax({url: dataURL, dataType: "jsonp"})).then(function(data){
+        cleanData(data);
+        markers = makeMarkers(locationDataClean);
+        plot(markers);
+        setInterval(getdata, 20000);
+    })
+});
