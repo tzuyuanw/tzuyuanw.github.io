@@ -1,8 +1,11 @@
 var routes;
 var locationData;
 var locationDataClean;
+var locationDataFilter;
 var markers;
-var dataURL = "https://www3.septa.org/hackathon/TransitViewAll/"
+var selectedRoute;
+var routeSelectionHTML = "<option selected>Select a Route</option><option value='all'>All</option>";
+var dataURL = "https://www3.septa.org/hackathon/TransitViewAll/";
 
 //Set up map
 var map = L.map('map', {
@@ -40,6 +43,19 @@ var cleanData = function(data){
         })
     })
     locationDataClean = _.compact(_.flatten(_.unzip(locationData)));
+    locationDataClean = locationDataClean.filter(function(data){
+        return data.VehicleID != "0";
+    })
+}
+
+var filterData = function(data, route){
+    if(route === "all"){
+        return data;
+    }else{
+        return data.filter(function(bus){
+            return bus.route == route;
+        })
+    }
 }
 
 var makeMarkers = function(data) {
@@ -69,11 +85,19 @@ var getdata = function(){
         success: function(data){
             remove(markers);
             cleanData(data);
-            markers = makeMarkers(locationDataClean);
+            locationDataFilter = filterData(locationDataClean,selectedRoute);
+            markers = makeMarkers(locationDataFilter);
             plot(markers);
+            //$('#routeSelection').empty().append(routeSelectionHTML);
             console.log("update");
         }
     });
+}
+
+var makeSelectHTML = function(routes){
+     routes.forEach(function(route){
+         routeSelectionHTML = routeSelectionHTML + '<option value="' + route + '">' + route + '</option>'
+     })
 }
 
 
@@ -82,6 +106,36 @@ $(document).ready(function(){
         cleanData(data);
         markers = makeMarkers(locationDataClean);
         plot(markers);
+        makeSelectHTML(routes);
+        $('#routeSelection').empty().append(routeSelectionHTML);
         setInterval(getdata, 20000);
+        $('#routeSelection').on('change', function() {
+            selectedRoute = $("#routeSelection").val();
+            locationDataFilter = filterData(locationDataClean,selectedRoute);
+            remove(markers);
+            markers = makeMarkers(locationDataFilter);
+            plot(markers);
+        });
+
     })
 });
+
+
+/* 
+Possible functions:
+filter by route
+    use bootstrap select
+    build html in js 
+read in gtfs from github 
+plot stop location using gtfs 
+plot route line using gtfs
+link to pdf schedule? 
+add gtfs schedule 
+
+$.ajax({
+        url: "https://ptx.transportdata.tw/MOTC/v2/Rail/Metro/LiveBoard/KLRT?$format=JSON",
+        success: function(data){
+            metro = data;
+        }
+    });
+*/
