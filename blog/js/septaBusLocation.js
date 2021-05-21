@@ -3,8 +3,9 @@ var locationData;
 var locationDataClean;
 var locationDataFilter;
 var markers;
-var selectedRoute;
-var routeSelectionHTML = "<option selected>Select a Route</option><option value='all'>All</option>";
+var condition;
+var selectedRoute = "all";
+var routeSelectionHTML = "<option selected value='all'>Select a Route</option><option value='all'>All</option>";
 var dataURL = "https://www3.septa.org/hackathon/TransitViewAll/";
 
 //Set up map
@@ -36,7 +37,7 @@ var customMarker= L.Icon.extend({
 //FUNCTIONS
 var cleanData = function(data){
     locationData = data.routes[0];
-    routes = Object.keys(data.routes[0]) // create an array of routes
+    routes = Object.keys(data.routes[0])                // create an array of routes
     routes.forEach(function(route){                     // add routes to location data
         locationData[route].forEach(function(data){
             data.route = route
@@ -88,16 +89,34 @@ var getdata = function(){
             locationDataFilter = filterData(locationDataClean,selectedRoute);
             markers = makeMarkers(locationDataFilter);
             plot(markers);
-            //$('#routeSelection').empty().append(routeSelectionHTML);
+            makeSelectHTML(routes);
+            $('#routeSelection').empty().append(routeSelectionHTML);        //update route selection list 
             console.log("update");
+            condition = routes.filter(function(data){   //If selected routes still in list  
+                return data == selectedRoute
+            }).length ==1;
+
+            if(condition){                              //route number still present  
+                $('#routeSelection').val(selectedRoute);
+            }else{                                      //route number does not exist 
+                $('#routeSelection').val("all");
+                
+            }
         }
     });
 }
 
 var makeSelectHTML = function(routes){
-     routes.forEach(function(route){
-         routeSelectionHTML = routeSelectionHTML + '<option value="' + route + '">' + route + '</option>'
-     })
+    routeSelectionHTML = "<option selected value='all'>Select a Route</option><option value='all'>All</option>";
+    routes.forEach(function(route){
+        routeSelectionHTML = routeSelectionHTML + '<option value="' + route + '">' + route + '</option>'
+    })
+}
+
+var makeVehicleCard = function(bus){
+    bus.forEach(function(data){
+        
+    })
 }
 
 
@@ -115,6 +134,7 @@ $(document).ready(function(){
             remove(markers);
             markers = makeMarkers(locationDataFilter);
             plot(markers);
+            makeVehicleCard(locationDataFilter);
         });
 
     })
@@ -123,9 +143,10 @@ $(document).ready(function(){
 
 /* 
 Possible functions:
-filter by route
+filter by route --- DONE
     use bootstrap select
     build html in js 
+Add bus information to sidebar 
 read in gtfs from github 
 plot stop location using gtfs 
 plot route line using gtfs
