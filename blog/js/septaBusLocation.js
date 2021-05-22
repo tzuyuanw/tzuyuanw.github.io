@@ -3,9 +3,12 @@ var locationData;
 var locationDataClean;
 var locationDataFilter;
 var markers;
+var circles;
 var condition;
 var selectedRoute = "all";
+var selectedRouteStop;
 var routeSelectionHTML = "<option selected value='all'>Select a Route</option><option value='all'>All</option>";
+var busInfoHTML = "";
 var dataURL = "https://www3.septa.org/hackathon/TransitViewAll/";
 
 //Set up map
@@ -67,6 +70,14 @@ var makeMarkers = function(data) {
     })
 };
 
+var makeCircles = function(data) {
+    return _.map(data,function(stop){
+        var lat = stop.lat;
+        var lng = stop.lng;
+        return L.circle([lat,lng],{radius:10})
+    })
+}
+
 var plot = function(marker) {
     _.each(marker,function(marker){
         marker.addTo(map);
@@ -89,6 +100,7 @@ var getdata = function(){
             locationDataFilter = filterData(locationDataClean,selectedRoute);
             markers = makeMarkers(locationDataFilter);
             plot(markers);
+            makeVehicleCard(locationDataFilter);
             makeSelectHTML(routes);
             $('#routeSelection').empty().append(routeSelectionHTML);        //update route selection list 
             console.log("update");
@@ -100,7 +112,6 @@ var getdata = function(){
                 $('#routeSelection').val(selectedRoute);
             }else{                                      //route number does not exist 
                 $('#routeSelection').val("all");
-                
             }
         }
     });
@@ -114,9 +125,56 @@ var makeSelectHTML = function(routes){
 }
 
 var makeVehicleCard = function(bus){
-    bus.forEach(function(data){
-        
-    })
+    busInfoHTML = "";
+    if(selectedRoute == "all"){
+        busInfoHTML = "";
+    }else{
+        bus.forEach(function(data){
+            if(data.estimated_seat_availability == "NOT_AVAILABLE"){
+                var seatAvailability = "No Information"
+                var badgeType = "bg-light"
+            }
+            if(data.estimated_seat_availability == "MANY_SEATS_AVAILABLE"){
+                var seatAvailability = "Many Seats Available"
+                var badgeType = "bg-success"
+            }
+            if(data.estimated_seat_availability == "FEW_SEATS_AVAILABLE"){
+                var seatAvailability = "Few Seats Available"
+                var badgeType = "bg-warning"
+            }
+            if(data.estimated_seat_availability == "STANDING_ROOM_ONLY"){
+                var seatAvailability = "Standing Room Only"
+                var badgeType = "bg-danger"
+            }
+            busInfoHTML = busInfoHTML + "<div class='card' style='width: 300 px;'><div class='card-body'>" + 
+                "<h5 class='card-title'>" + data.route + "</h5>" + 
+                "<h6 class='card-subtitle mb-2 text-muted'> To " + data.destination + "</h6>" +
+                "<p class='card-text'>Next: " + data.next_stop_name + "<br>" +
+                "Seats Available: <span class='badge " + badgeType + " text-dark'>" + seatAvailability + "</span></p>" +
+                "</div></div>"
+        })
+    }
+    $('#busInfo').empty().append(busInfoHTML);
+}
+
+var addStops = function(route){
+    remove(circles);
+    if(route != "all"){
+        var stopURL = "http://www3.septa.org/hackathon/Stops/?req1=" + route + "&callback=?"
+        console.log(stopURL);
+        $.ajax({
+            url: stopURL,
+            dataType: "jsonp",
+            success: function(data){
+                selectedRouteStop = data;
+                circles = makeCircles(selectedRouteStop);
+                plot(circles);
+            }
+        });
+    }else{
+        //do nothing
+    }
+
 }
 
 
@@ -134,6 +192,7 @@ $(document).ready(function(){
             remove(markers);
             markers = makeMarkers(locationDataFilter);
             plot(markers);
+            addStops(selectedRoute);
             makeVehicleCard(locationDataFilter);
         });
 
@@ -146,7 +205,9 @@ Possible functions:
 filter by route --- DONE
     use bootstrap select
     build html in js 
-Add bus information to sidebar 
+Update route selector list after each ajax call --- DONE 
+Add bus information to sidebar --- DONE
+Add stop location --- DONE
 read in gtfs from github 
 plot stop location using gtfs 
 plot route line using gtfs
