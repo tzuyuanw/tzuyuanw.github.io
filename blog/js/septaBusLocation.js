@@ -4,9 +4,11 @@ var locationDataClean;
 var locationDataFilter;
 var markers;
 var circles;
+var lines = [];
 var condition;
 var selectedRoute = "all";
 var selectedRouteStop;
+var selectedRouteLine;
 var routeSelectionHTML = "<option selected value='all'>Select a Route</option><option value='all'>All</option>";
 var busInfoHTML = "";
 var dataURL = "https://www3.septa.org/hackathon/TransitViewAll/";
@@ -76,6 +78,10 @@ var makeCircles = function(data) {
         var lng = stop.lng;
         return L.circle([lat,lng],{radius:10}).bindPopup(stop.stopname)
     })
+}
+
+var makeLines = function(data) {
+    return L.polyline(data, {color: 'red',opacity: 0.5});
 }
 
 var plot = function(marker) {
@@ -182,7 +188,40 @@ var addStops = function(route){
     }
 }
 
+var addRoute = function(route){
+    //remove(lines);
+    map.removeLayer(lines)
+    if(route != "all"){
+        if(route == "MARKET-FRANKFORD OWL"){
+            route = "MFO"
+        }
+        if(route == "BROAD STREET LINE OWL"){
+            route = "BSO"
+        }
+        var routeURL = "https://services2.arcgis.com/9U43PSoL47wawX5S/arcgis/rest/services/Spring_2019_Routes/FeatureServer/0/query?where=Route%20%3D%20'" + route + "'&outFields=Route,Route_Name,Shape__Length,FID&outSR=4326&f=json"
+        console.log(routeURL);
+        $.ajax({
+            url: routeURL,
+            success: function(data){
+                selectedRouteLine = JSON.parse(data);
+                //selectedRouteLine = _.flatten(selectedRouteLine.features[0].geometry.paths,1)
+                selectedRouteLine = selectedRouteLine.features[0].geometry.paths
+                selectedRouteLine = _.map(selectedRouteLine,function(data){
+                    var latOne = data[0][1];
+                    var lngOne = data[0][0];
+                    var latTwo = data[1][1];
+                    var lngTwo = data[1][0];
+                    return [[latOne,lngOne],[latTwo,lngTwo]];
+                })
+                lines = makeLines(selectedRouteLine);
+                lines.addTo(map);
 
+            }
+        });
+    }else{
+        // if route == all; do nothing
+    }
+}
 
 $(document).ready(function(){
     $.when($.ajax({url: dataURL, dataType: "jsonp"})).then(function(data){
@@ -199,6 +238,7 @@ $(document).ready(function(){
             markers = makeMarkers(locationDataFilter);
             plot(markers);
             addStops(selectedRoute);
+            addRoute(selectedRoute);
             makeVehicleCard(locationDataFilter);
         });
 
@@ -225,6 +265,7 @@ $.ajax({
         }
     });
 metro.features[0].geometry.paths
+_.flatten(metro.features[0].geometry.paths,1)
 
 link to pdf schedule? 
 add gtfs schedule 
