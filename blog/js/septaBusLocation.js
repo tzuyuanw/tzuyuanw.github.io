@@ -74,7 +74,7 @@ var makeCircles = function(data) {
     return _.map(data,function(stop){
         var lat = stop.lat;
         var lng = stop.lng;
-        return L.circle([lat,lng],{radius:10})
+        return L.circle([lat,lng],{radius:10}).bindPopup(stop.stopname)
     })
 }
 
@@ -160,6 +160,12 @@ var makeVehicleCard = function(bus){
 var addStops = function(route){
     remove(circles);
     if(route != "all"){
+        if(route == "MARKET-FRANKFORD OWL"){
+            route = "MFO"
+        }
+        if(route == "BROAD STREET LINE OWL"){
+            route = "BSO"
+        }
         var stopURL = "http://www3.septa.org/hackathon/Stops/?req1=" + route + "&callback=?"
         console.log(stopURL);
         $.ajax({
@@ -172,10 +178,10 @@ var addStops = function(route){
             }
         });
     }else{
-        //do nothing
+        // if route == all; do nothing
     }
-
 }
+
 
 
 $(document).ready(function(){
@@ -210,9 +216,21 @@ Add bus information to sidebar --- DONE
 Add stop location --- DONE
 read in gtfs from github 
 plot stop location using gtfs 
-plot route line using gtfs
+plot route line
+
+$.ajax({
+        url: "https://services2.arcgis.com/9U43PSoL47wawX5S/arcgis/rest/services/Spring_2019_Routes/FeatureServer/0/query?where=Route%20%3D%20'J'&outFields=Route,Route_Name,Shape__Length,FID&outSR=4326&f=json",
+        success: function(data){
+            metro = JSON.parse(data);
+        }
+    });
+metro.features[0].geometry.paths
+
 link to pdf schedule? 
 add gtfs schedule 
+
+
+
 
 $.ajax({
         url: "https://ptx.transportdata.tw/MOTC/v2/Rail/Metro/LiveBoard/KLRT?$format=JSON",
