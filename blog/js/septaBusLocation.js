@@ -81,7 +81,7 @@ var makeCircles = function(data) {
 }
 
 var makeLines = function(data) {
-    return L.polyline(data, {color: 'red',opacity: 0.5});
+    return L.polyline(data, {opacity: 0.5});
 }
 
 var plot = function(marker) {
@@ -254,9 +254,8 @@ filter by route --- DONE
 Update route selector list after each ajax call --- DONE 
 Add bus information to sidebar --- DONE
 Add stop location --- DONE
-read in gtfs from github 
-plot stop location using gtfs 
-plot route line
+plot route line --- DONE
+highlight card when icon selected 
 
 $.ajax({
         url: "https://services2.arcgis.com/9U43PSoL47wawX5S/arcgis/rest/services/Spring_2019_Routes/FeatureServer/0/query?where=Route%20%3D%20'J'&outFields=Route,Route_Name,Shape__Length,FID&outSR=4326&f=json",
