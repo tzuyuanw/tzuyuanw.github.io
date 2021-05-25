@@ -172,7 +172,7 @@ var addStops = function(route){
         if(route == "BROAD STREET LINE OWL"){
             route = "BSO"
         }
-        var stopURL = "http://www3.septa.org/hackathon/Stops/?req1=" + route + "&callback=?"
+        var stopURL = "https://www3.septa.org/hackathon/Stops/?req1=" + route + "&callback=?"
         console.log(stopURL);
         $.ajax({
             url: stopURL,
