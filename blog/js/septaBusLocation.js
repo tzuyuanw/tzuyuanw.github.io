@@ -5,6 +5,7 @@ var locationDataFilter;
 var markers;
 var circles;
 var lines = [];
+var bounds;
 var condition;
 var selectedRoute = "all";
 var selectedMarker;
@@ -240,7 +241,10 @@ var addRoute = function(route){
                 })
                 lines = makeLines(selectedRouteLine);
                 lines.addTo(map);
-
+                //modify bounds and fly to it 
+                bounds = lines.getBounds()
+                bounds._southWest.lng = bounds._southWest.lng - 0.1;
+                map.flyToBounds(bounds);
             }
         });
     }else{
@@ -263,6 +267,7 @@ $(document).ready(function(){
             plot(markers);
             addStops(selectedRoute);
             addRoute(selectedRoute);
+            //map.flyToBounds(lines.getBounds());
             makeVehicleCard(locationDataFilter);
             $('.leaflet-marker-icon').click(function(e){
                 console.log("clicked");
@@ -293,7 +298,7 @@ Add stop location --- DONE
 plot route line --- DONE
 highlight card when icon selected --- DONE
 add title and prompts
-zoom to bus line 
+zoom to bus line --- DONE
 
 $.ajax({
         url: "https://services2.arcgis.com/9U43PSoL47wawX5S/arcgis/rest/services/Spring_2019_Routes/FeatureServer/0/query?where=Route%20%3D%20'J'&outFields=Route,Route_Name,Shape__Length,FID&outSR=4326&f=json",
