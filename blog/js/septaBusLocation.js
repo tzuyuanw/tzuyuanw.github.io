@@ -7,8 +7,10 @@ var circles;
 var lines = [];
 var condition;
 var selectedRoute = "all";
+var selectedMarker;
 var selectedRouteStop;
 var selectedRouteLine;
+var selectedBus;
 var routeSelectionHTML = "<option selected value='all'>Select a Route</option><option value='all'>All</option>";
 var busInfoHTML = "";
 var dataURL = "https://www3.septa.org/hackathon/TransitViewAll/";
@@ -119,6 +121,12 @@ var getdata = function(){
             }else{                                      //route number does not exist 
                 $('#routeSelection').val("all");
             }
+            $('.leaflet-interactive').click(function(e){
+                console.log("clicked");
+                $(".card").removeClass("bg-dark bg-gradient text-white shadow")
+                selectedBus = findClickedMarker(e);
+                $("#" + selectedBus[0].VehicleID).addClass("bg-dark bg-gradient text-white shadow");
+            })
         }
     });
 }
@@ -152,7 +160,7 @@ var makeVehicleCard = function(bus){
                 var seatAvailability = "Standing Room Only"
                 var badgeType = "bg-danger"
             }
-            busInfoHTML = busInfoHTML + "<div class='card' style='width: 300 px;'><div class='card-body'>" + 
+            busInfoHTML = busInfoHTML + "<div class='card bg-light' id="+ data.VehicleID +" style='width: 300 px;'><div class='card-body'>" + 
                 "<h5 class='card-title'>" + data.route + "</h5>" + 
                 "<h6 class='card-subtitle mb-2 text-muted'> To " + data.destination + "</h6>" +
                 "<p class='card-text'>Next: " + data.next_stop_name + "<br>" +
@@ -161,6 +169,23 @@ var makeVehicleCard = function(bus){
         })
     }
     $('#busInfo').empty().append(busInfoHTML);
+}
+
+//find clicked marker
+var findClickedMarker = function(e){
+    //console.log("yay");
+    selectedMarker = markers.filter(function(data){
+        return data._leaflet_id === e.currentTarget._leaflet_id - 1 ;
+    });
+    selectedLat = selectedMarker[0]._latlng.lat;
+    selectedLng = selectedMarker[0]._latlng.lng;
+    //console.log(selectedLat);
+    //console.log(selectedMarker);
+    selectedBus = locationDataClean.filter(function(data){
+        return data.lat == selectedLat && data.lng == selectedLng;
+    })
+    console.log(selectedBus);
+    return selectedBus;
 }
 
 var addStops = function(route){
@@ -173,7 +198,7 @@ var addStops = function(route){
             route = "BSO"
         }
         var stopURL = "https://www3.septa.org/hackathon/Stops/?req1=" + route + "&callback=?"
-        console.log(stopURL);
+        //console.log(stopURL);
         $.ajax({
             url: stopURL,
             dataType: "jsonp",
@@ -199,7 +224,7 @@ var addRoute = function(route){
             route = "BSO"
         }
         var routeURL = "https://services2.arcgis.com/9U43PSoL47wawX5S/arcgis/rest/services/Spring_2019_Routes/FeatureServer/0/query?where=Route%20%3D%20'" + route + "'&outFields=Route,Route_Name,Shape__Length,FID&outSR=4326&f=json"
-        console.log(routeURL);
+        //console.log(routeURL);
         $.ajax({
             url: routeURL,
             success: function(data){
@@ -230,7 +255,6 @@ $(document).ready(function(){
         plot(markers);
         makeSelectHTML(routes);
         $('#routeSelection').empty().append(routeSelectionHTML);
-        setInterval(getdata, 20000);
         $('#routeSelection').on('change', function() {
             selectedRoute = $("#routeSelection").val();
             locationDataFilter = filterData(locationDataClean,selectedRoute);
@@ -240,8 +264,20 @@ $(document).ready(function(){
             addStops(selectedRoute);
             addRoute(selectedRoute);
             makeVehicleCard(locationDataFilter);
+            $('.leaflet-marker-icon').click(function(e){
+                console.log("clicked");
+                $(".card").removeClass("bg-dark bg-gradient text-white shadow")
+                selectedBus = findClickedMarker(e);
+                $("#" + selectedBus[0].VehicleID).addClass("bg-dark bg-gradient text-white shadow");
+            });
         });
-
+        $('.leaflet-marker-icon').click(function(e){
+            console.log("clicked");
+            $(".card").removeClass("bg-dark bg-gradient text-white shadow")
+            selectedBus = findClickedMarker(e);
+            $("#" + selectedBus[0].VehicleID).addClass("bg-dark bg-gradient text-white shadow");
+        });
+        setInterval(getdata, 20000);
     })
 });
 
@@ -255,7 +291,9 @@ Update route selector list after each ajax call --- DONE
 Add bus information to sidebar --- DONE
 Add stop location --- DONE
 plot route line --- DONE
-highlight card when icon selected 
+highlight card when icon selected --- DONE
+add title and prompts
+zoom to bus line 
 
 $.ajax({
         url: "https://services2.arcgis.com/9U43PSoL47wawX5S/arcgis/rest/services/Spring_2019_Routes/FeatureServer/0/query?where=Route%20%3D%20'J'&outFields=Route,Route_Name,Shape__Length,FID&outSR=4326&f=json",
