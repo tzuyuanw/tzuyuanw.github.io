@@ -18,8 +18,8 @@ var dataURL = "https://www3.septa.org/hackathon/TransitViewAll/";
 
 //Set up map
 var map = L.map('map', {
-    center: [39.9430, -75.201388],
-    zoom: 13,
+    center: [39.9730, -75.251388],
+    zoom: 12,
     zoomControl: false
 });
 
@@ -297,8 +297,10 @@ Add bus information to sidebar --- DONE
 Add stop location --- DONE
 plot route line --- DONE
 highlight card when icon selected --- DONE
-add title and prompts
 zoom to bus line --- DONE
+add title and prompts --- DONE
+add total number of buses and routes in service 
+
 
 $.ajax({
         url: "https://services2.arcgis.com/9U43PSoL47wawX5S/arcgis/rest/services/Spring_2019_Routes/FeatureServer/0/query?where=Route%20%3D%20'J'&outFields=Route,Route_Name,Shape__Length,FID&outSR=4326&f=json",
