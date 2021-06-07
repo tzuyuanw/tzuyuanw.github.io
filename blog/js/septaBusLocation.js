@@ -311,8 +311,6 @@ $.ajax({
 metro.features[0].geometry.paths
 _.flatten(metro.features[0].geometry.paths,1)
 
-link to pdf schedule? 
-add gtfs schedule 
 
 
 
