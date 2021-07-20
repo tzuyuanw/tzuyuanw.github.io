@@ -1,7 +1,22 @@
-body {
-    margin: 60px auto;
-    width: 70%;
+nav ul li, footer ul li {
+    display: inline;
+    margin-right: 20px;
 }
+
+footer {
+    border-top: 1px solid #d5d5d5;
+    font-size: .8em;
+}
+
+body{
+    margin-left: 100px;
+}
+/*
+nav{
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
 nav ul, footer ul {
     font-family:'Helvetica', 'Arial', 'Sans-Serif';
     padding: 0px;
@@ -16,6 +31,9 @@ a {
     text-decoration: none;
     color: #999;
 }
+b{
+    font
+}
 a:hover {
     text-decoration: underline;
 }
@@ -23,6 +41,8 @@ h1 {
     font-size: 3em;
     font-family:'Helvetica', 'Arial', 'Sans-Serif';
     color: #333;
+    margin-left: 100px;
+    margin-right: 100px;
 }
 h3 {
     font-size: 2em;
@@ -38,40 +58,14 @@ p {
 .aligncenter {
     text-align: center;
 }
-/* Create two equal columns that floats next to each other */
-.column {
-  float: left;
-  padding: 10px;
-  /*height: 300px; /* Should be removed. Only for demonstration */
-}
-.left {
-    width: 33%;
-}
-.right {
-    width: 66%;
-}
-
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-
-}
 
 footer {
     border-top: 1px solid #d5d5d5;
     font-size: .8em;
+    margin-left: 100px;
+    margin-right: 100px;
+    
 }
 
-ul.posts { 
-    margin: 20px auto 40px; 
-    font-size: 1em;
-}
-
-ul.posts li {
-    list-style: none;
-}
-
-
+*/
 
