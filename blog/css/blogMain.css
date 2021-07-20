@@ -6,9 +6,10 @@ nav{
 p{
     margin-left: 100px;
 }
-footer {
+.footer{
     position: absolute;
-    bottom: 0px;
+    bottom: 0;
+    height: 50px;
     left: 100px;
     right: 100px;
     border-top: 1px solid #d5d5d5;
