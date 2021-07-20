@@ -7,7 +7,7 @@ p{
     margin-left: 20px;
 }
 .footer{
-    position: absolute;
+    position: relative;
     bottom: 0;
     height: 50px;
     left: 100px;
