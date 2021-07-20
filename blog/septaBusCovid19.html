@@ -1,3 +1,4 @@
+<!--
 ---
 layout: default
 title: SEPTA Bus Service Changes Due to COVID-19
@@ -41,3 +42,68 @@ title: SEPTA Bus Service Changes Due to COVID-19
 		</p>
 		
 	</div>
+-->
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>SEPTA Bus Service Changes Due to COVID-19</title>
+		<!-- link to main stylesheet -->
+		<link rel="stylesheet" href="css/blogMain.css" />
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"  integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous"/>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
+	</head>
+	<body>
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb">
+			  <li class="breadcrumb-item"><a class="link-secondary text-decoration-none" href="/"><b>Home</b></a></li>
+			  <li class="breadcrumb-item"><a class="link-secondary text-decoration-none" href="/blog"><b>Portfolio</b></a></li>
+			  <li class="breadcrumb-item active" aria-current="page">SEPTA Bus Service Changes Due to COVID-19</li>
+			</ol>
+		</nav>
+		<div class="container">
+			<p class="fs-1">SEPTA Bus Service Changes Due to COVID-19</p>
+			<p> Since Philadelphia announced the stay at home order on March 23, SEPTA has modified its schedule three major times for its bus, trolley, and subways. 
+				It started operating Saturday schedule for everyday on March 22. 
+				Then on April 9, SEPTA further reduced its bus service to around 60 core routes, calling this the lifeline service.  
+				On April 26, SEPTA changed most of its bus routes that it still operated to headway based, resulting in a slightly lower number of daily trips served. 
+				Finally on May 17, SEPTA returned to its regular summer schedule. It is important to note that even though decrease in service level is drastic, 
+				this already represents an overestimate of the total number of bus trips operated by SEPTA. During the reduced service period, 
+				SEPTA did not operate trips when a bus driver is not available. They allow the trip to be missed, resulting in a higher missed trip rate than usual.
+			</p>
+			<p>Before the pandemic, SEPTA operated around 14,000 daily bus trips on weekdays, 8,500 on Saturdays, and 6,700 on Sundays. 
+				During the period when SEPTA operated Saturday schedule for everyday, 
+				the number of daily bus trips were around 8,600 with minor fluctuation based on days of the week. 
+				Lastly, during the lifeline service, it ran in between 4,700 and 4,400 daily trips according to GTFS schedule.
+			</p>
+			<iframe src="GTFS_schedule_graph.html" frameborder="0" width="100%" height="500px"></iframe>
+			<p> 
+				Counting the weekday daily frequency at stops yield large decreases throughout the system.
+				This is the result of the shift to operating on Saturday schedule and then further decreasing service.
+				Interestingly, since SEPTA begin operating Saturday schedule for everyday, 
+				a few areas in the suburb of Philadelphia actually experienced
+				a higher frequency bus service during late April and early May. 
+				</p>
+			<iframe src="GTFS_changes_map.html" frameborder="0" width="100%" height="600px"></iframe>
+			<p>From observing the stops with service during the lifeline schedule, 
+				it can be seen that SEPTA largely preserved the extend of its service, 
+				however reduced the density of its network. Stops with services during lifeline service were more spread out, 
+				especially in center city Philadelphia. Several routes connecting outlying suburbs, without entering the city were also suspended. 
+			</p>
+			<iframe src="GTFS_stopPerChg_map.html" frameborder="0" width="100%" height="600px"></iframe>
+			<p> Notes on Data Processing and Data Sources:<br/>
+				This analysis uses SEPTA's publically available GTFS data covering the period between February 23 to July 13, 2020. 
+				The data was prcessed in R to calculate the number of trips scheduled for each day at both the system and stop level. 
+				The graph and map illustrated were also created in R, using packages such as ggplot2, plotly, and leaflet.
+			</p>
+		</div>
+		<div class="footer">
+			<footer>
+				<ul>
+					<li><a class="link-secondary text-decoration-none" href="mailto:tzuyuan@alumni.upenn.edu">tzuyuan@alumni.upenn.edu</a></li>
+					<li><a class="link-secondary text-decoration-none" href="https://github.com/tzuyuanw">github.com/tzuyuanw</a></li>
+				</ul>
+			</footer>
+		</div>
+	</body>
+</html>
