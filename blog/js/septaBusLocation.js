@@ -253,6 +253,7 @@ var addRoute = function(route){
 }
 
 $(document).ready(function(){
+    $('#openModal').modal('show');
     $.when($.ajax({url: dataURL, dataType: "jsonp"})).then(function(data){
         cleanData(data);
         markers = makeMarkers(locationDataClean);

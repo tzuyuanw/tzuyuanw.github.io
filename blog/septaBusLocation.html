@@ -13,6 +13,7 @@
     <body>
         <!-- Map -->
         <div id="map"></div>
+        <!--Sidebar-->
         <div class="sidebar-background shadow-lg"></div>
         <div class="sidebar">
             <nav aria-label="breadcrumb">
@@ -33,6 +34,27 @@
             <p></p>
             <div class="busInfo" id="busInfo">
                 <!--Cards added in js-->
+            </div>
+        </div>
+        <!-- Modal when open page-->
+        <div class="modal fade" id="openModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog  modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">SEPTA Live Vehicle Information</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    This page visualizes SEPTA live vehicle data in the Philadelphia region. 
+                    It includes all buses and trolleys currently in operation.
+                    The data displayed refreshes every 20 seconds.
+                    <br><br>
+                    Selecting a specific route allows the user to view all vehicles operating on the route, the routing, and stops.
+                    <br><br>
+                    The page was built using JavaScript and libraries such as Leaflet and Bootstrap.
+                    All data are obtained through SEPTA's publically available APIs. 
+                </div>
+            </div>
             </div>
         </div>
 
