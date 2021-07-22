@@ -71,7 +71,7 @@ var makeMarkers = function(data) {
     return _.map(data,function(bus){
         var lat = bus.lat;
         var lng = bus.lng;
-        return L.marker([lat,lng],{icon: new customMarker()}).bindPopup(bus.route);
+        return L.marker([lat,lng],{icon: new customMarker()}).bindPopup("Route: " + bus.route);
     })
 };
 
