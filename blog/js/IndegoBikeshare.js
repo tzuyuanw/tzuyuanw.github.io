@@ -112,7 +112,7 @@ var updateInfoCard = function(data){
             $('#noDock').show();
         }
         $('#results').show();
-        $('#results').empty().append('<div id="' + name + '" style="margin-top:50px;margin-bottom:50px;"><strong style="font-size: x-large">' + name + '</strong>' + 
+        $('#results').empty().append('<div id="' + name + '" style="margin-top:50px;margin-bottom:50px;"><strong style="font-size: x-large"></br>' + name + '</strong>' + 
             '<br>Current Status: ' + status + 
             '<br>Number of Bikes Available: <strong style="font-size: large">' + bikesAvailable + '</strong>' + 
             '<br>Number of Electric Bikes Available: <strong style="font-size: large">' + electricBikesAvailable + '</strong>' + 
@@ -139,7 +139,7 @@ var updateInfoCard = function(data){
                                     return data.properties.kioskId == selectedOD[selectedOD.length - 3].end_station;
                                 })[0].properties.name;
             $('#results').show();
-            $('#results').empty().append('<div id="' + name + '" style="margin-top:50px;margin-bottom:50px;"><strong style="font-size: x-large">' + name + '</strong>' + 
+            $('#results').empty().append('<div id="' + name + '" style="margin-top:50px;margin-bottom:50px;"><strong style="font-size: x-large"></br>' + name + '</strong>' + 
                 '<br>According to data from January to March 2021: ' + 
                 '<br><strong style="font-size: large">' + avgTripStart + '</strong> trips originate daily from this station.' +
                 '<br><strong style="font-size: large">' + avgTripEnd + '</strong> trips end daily at this station.' + 
