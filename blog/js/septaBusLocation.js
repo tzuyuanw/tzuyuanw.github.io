@@ -142,7 +142,8 @@ var makeSelectHTML = function(routes){
 var makeVehicleCard = function(bus){
     busInfoHTML = "";
     if(selectedRoute == "all"){
-        busInfoHTML = "";
+        busInfoHTML = "<div><strong style='font-size: x-large'>" + locationDataClean.length + " </strong>buses are in operation" + 
+            "<br><strong style='font-size: x-large'>"+ routes.length +" </strong>routes are in operation</div>"
     }else{
         bus.forEach(function(data){
             if(data.estimated_seat_availability == "NOT_AVAILABLE"){
@@ -288,7 +289,7 @@ $(document).ready(function(){
             selectedBus = findClickedMarker(e);
             $("#" + selectedBus[0].VehicleID).addClass("bg-dark bg-gradient text-white shadow");
         });
-        setInterval(getdata, 20000);
+        setInterval(getdata, 20000);//Update every 20 seconds
     })
 });
 
