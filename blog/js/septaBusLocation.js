@@ -224,12 +224,17 @@ var addRoute = function(route){
         if(route == "BROAD STREET LINE OWL"){
             route = "BSO"
         }
-        var routeURL = "https://services2.arcgis.com/9U43PSoL47wawX5S/arcgis/rest/services/Spring_2019_Routes/FeatureServer/0/query?where=Route%20%3D%20'" + route + "'&outFields=Route,Route_Name,Shape__Length,FID&outSR=4326&f=json"
+        //var routeURL = "https://services2.arcgis.com/9U43PSoL47wawX5S/arcgis/rest/services/Spring_2019_Routes/FeatureServer/0/query?where=Route%20%3D%20'" + route + "'&outFields=Route,Route_Name,Shape__Length,FID&outSR=4326&f=json"
         //console.log(routeURL);
+        var routeURL = "https://services2.arcgis.com/9U43PSoL47wawX5S/arcgis/rest/services/SeptaLinesFall2021/FeatureServer/0/query?where=LineAbbr%20%3D%20'" + route + "'&outFields=*&outSR=4326&f=json"
+        console.log(route)
+        console.log(routeURL)
+
         $.ajax({
             url: routeURL,
             success: function(data){
-                selectedRouteLine = JSON.parse(data);
+                selectedRouteLine = data;
+                //selectedRouteLine = JSON.parse(data);
                 //selectedRouteLine = _.flatten(selectedRouteLine.features[0].geometry.paths,1)
                 selectedRouteLine = selectedRouteLine.features[0].geometry.paths
                 selectedRouteLine = _.map(selectedRouteLine,function(data){
