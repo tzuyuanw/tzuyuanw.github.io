@@ -306,7 +306,7 @@ plot route line --- DONE
 highlight card when icon selected --- DONE
 zoom to bus line --- DONE
 add title and prompts --- DONE
-add total number of buses and routes in service 
+add total number of buses and routes in service --- DONE
 
 
 $.ajax({
